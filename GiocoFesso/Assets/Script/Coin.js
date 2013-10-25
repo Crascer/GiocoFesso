@@ -51,8 +51,11 @@ function DragObject(deltaPosition : Vector2)
 function OnTriggerEnter(hit : Collider){
 	Debug.Log(""+hit.transform.name);
 	if(hit.transform.tag == slotColor || hit.transform.tag == "SlotArcobaleno"){
+		transform.parent.transform.GetComponent(Dispenser).score = transform.parent.transform.GetComponent(Dispenser).score+5;
+		Destroy(this.gameObject);
+	}else {
+		transform.parent.transform.GetComponent(Dispenser).score = transform.parent.transform.GetComponent(Dispenser).score-5;
 		Destroy(this.gameObject);
 	}
-	
 }
 
