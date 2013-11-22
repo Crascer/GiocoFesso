@@ -1,11 +1,18 @@
 ﻿#pragma strict
 
+//Control var
 var  _horizontalLimit : float = 2.5f;
 var  _verticalLimit : float = 2.5f;
 var dragSpeed : float = 0.1f;
 var cachedTransform : Transform;
 var startingPos : Vector3;
+
+//Game var
+var scoreGiven: int = 5;
 var slotColor : String;
+var mode : CoinMode;
+
+enum CoinMode {Normal, TimeCoin, RainbowCoin, X2, X3}
 
 function Start () {
     //Make reference to transform
@@ -50,12 +57,21 @@ function DragObject(deltaPosition : Vector2)
 
 function OnTriggerEnter(hit : Collider){
 	Debug.Log(""+hit.transform.name);
-	if(hit.transform.tag == slotColor || hit.transform.tag == "SlotArcobaleno"){
-		transform.parent.transform.GetComponent(Dispenser).score = transform.parent.transform.GetComponent(Dispenser).score+5;
+	if(hit.transform.tag == slotColor || hit.transform.tag == "SlotArcobaleno" || mode > CoinMode.Normal){
+		
+		if(mode == CoinMode.X2)
+			transform.parent.transform.GetComponent(Dispenser).x2Multiply();
+		if(mode == CoinMode.X3)
+			transform.parent.transform.GetComponent(Dispenser).x3Multiply();
+		if(mode == CoinMode.TimeCoin)
+			transform.parent.transform.GetComponent(Dispenser).AddTime();
+		
+		transform.parent.transform.GetComponent(Dispenser).AddScore(scoreGiven);
 		Destroy(this.gameObject);
+		
 	}else {
-		transform.parent.transform.GetComponent(Dispenser).score = transform.parent.transform.GetComponent(Dispenser).score-5;
-		Destroy(this.gameObject);
+		transform.parent.transform.GetComponent(Dispenser).SubScore(scoreGiven);
+		Destroy(this.gameObject);	
 	}
 }
 

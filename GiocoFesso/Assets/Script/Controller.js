@@ -24,3 +24,15 @@ function Update () {
 		coll.size = Vector3(1,1,5);
 	}
 }
+
+function AddTime(){
+	if(counter.GetComponent(Timer).Seconds < 55)
+		counter.GetComponent(Timer).Seconds = counter.GetComponent(Timer).Seconds + 5;
+	else{
+		var rem :int = 60 - (counter.GetComponent(Timer).Seconds + 5);
+		rem = rem*(-1);
+		
+		counter.GetComponent(Timer).Seconds = rem;
+		counter.GetComponent(Timer).Minutes = counter.GetComponent(Timer).Minutes+1;
+	}
+}
