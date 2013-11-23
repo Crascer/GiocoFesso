@@ -27,16 +27,18 @@ function OnGUI(){
 function Creat() {
 	yield WaitForSeconds(0.3);
 	creating = false;
+	//Algoritmo di randomizzazione figo u.u
 	Random.seed = Time.time;
 	var rnd = Random.Range(0,101);
 	Debug.Log(rnd);
 	if(rnd>=0 && rnd<=10)
-		rnd = 6;
+		rnd = (rnd%2)+6;
 	else 
 		rnd = rnd%6;
 		
 	currentChild = Instantiate(coin[rnd], transform.position, transform.rotation);
 	currentChild.parent = this.transform;
+	//Fine Algoritmo di randomizzazione figo u.u
 }
 
 function AddScore(baseScore : int){
